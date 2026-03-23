@@ -37,7 +37,7 @@ The data is streamed directly to a terminal emulator (PuTTY) on the PC via `COM3
 
 The image below demonstrates a real-time test of the sensor's responsiveness. Upon placing a finger on the BME280 sensor, a clear rise in temperature can be observed (from 21.04 °C to 27.02 °C).
 
-![PuTTY Terminal Output](Documentation/PuTTY - COM3.png)
+![PuTTY Terminal Output](Documentation/PuTTY_COM3.png)
 
 ## Software Implementation
 
