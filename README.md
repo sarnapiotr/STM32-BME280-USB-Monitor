@@ -17,12 +17,12 @@ The collected data is formatted and transmitted to a PC terminal via a Virtual C
 ### Circuit Setup
 Below is the physical configuration of the connected hardware:
 
-![Circuit Configuration](STM32-BME280-USB-Monitor/blob/main/Documentation/STM32-BME280-USB-Monitor.jpg)
+![Circuit Configuration](Documentation/STM32-BME280-USB-Monitor.jpg)
 
 ### Pinout Table
 The BME280 sensor is connected to the STM32F4DISCOVERY board according to the following pinout. The `CSB` and `SDO` pins are configured specifically to select the I2C interface and set the appropriate I2C address (`0x76`).
 
-| BME280 Pin | STM32 Pin / Power | Description |
+| BME280 Pin | STM32 Pin | Description |
 | :---: | :---: | :--- |
 | **VCC** | 3V | Power |
 | **GND** | GND | Ground |
@@ -37,14 +37,14 @@ The data is streamed directly to a terminal emulator (PuTTY) on the PC via `COM3
 
 The image below demonstrates a real-time test of the sensor's responsiveness. Upon placing a finger on the BME280 sensor, a clear rise in temperature can be observed (from 21.04 °C to 27.02 °C).
 
-![PuTTY Terminal Output](STM32-BME280-USB-Monitor/blob/main/Documentation/PuTTY - COM3.png)
+![PuTTY Terminal Output](Documentation/PuTTY - COM3.png)
 
 ## Software Implementation
 
 A core component of this project is a library developed to handle sensor communication and data processing:
 
-* **[`bme280.c`](STM32-BME280-USB-Monitor/blob/main/bme280.c) / [`bme280.h`](STM32-BME280-USB-Monitor/blob/main/bme280.h):** This library is responsible for reading the raw, uncompensated data directly from the sensor's registers via I2C. It then applies the necessary compensation formulas to calculate accurate, human-readable values for temperature, pressure, and humidity.
-* **[`main.c`](STM32-BME280-USB-Monitor/blob/main/main.c) integration:** The main application utilizes data from the `bme280.c` library and writes the formatted data to the PuTTY terminal.
+* **[`bme280.c`](bme280.c) / [`bme280.h`](bme280.h):** This library is responsible for reading the raw, uncompensated data directly from the sensor's registers via I2C. It then applies the necessary compensation formulas to calculate accurate, human-readable values for temperature, pressure, and humidity.
+* **[`main.c`](main.c) integration:** The main application utilizes data from the `bme280.c` library and writes the formatted data to the PuTTY terminal.
 ## Hardware Used
 * STM32F4DISCOVERY (STM32F407VGT6)
 * Bosch BME280
@@ -54,4 +54,4 @@ A core component of this project is a library developed to handle sensor communi
 * STM32CubeIDE 2.1.1
 
 ## Manufacturer Datasheet
-* [BME280 Official Datasheet PDF](STM32-BME280-USB-Monitor/blob/main/Documentation/bst-bme280-ds002.pdf)
+* [BME280 Official Datasheet PDF](Documentation/bst-bme280-ds002.pdf)
