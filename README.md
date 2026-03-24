@@ -44,7 +44,7 @@ The image below demonstrates a real-time test of the sensor's responsiveness. Up
 A core component of this project is a library developed to handle sensor communication and data processing:
 
 * **[`bme280.c`](bme280.c) / [`bme280.h`](bme280.h):** This library is responsible for reading the raw, uncompensated data directly from the sensor's registers via I2C. It then applies the necessary compensation formulas to calculate accurate, human-readable values for temperature, pressure, and humidity.
-* **[`main.c`](main.c) integration:** The main application utilizes data from the `bme280.c` library and writes the formatted data to the PuTTY terminal.
+* **[`main.c`](main.c):** The main application utilizes data from the `bme280.c` library and writes the formatted data to the PuTTY terminal.
 ## Hardware Used
 * STM32F4DISCOVERY (STM32F407VGT6)
 * Bosch BME280
