@@ -4,13 +4,14 @@
 
 This project focuses on reading environmental data (temperature, atmospheric pressure, and humidity) using an **STM32F4DISCOVERY** board (equipped with the STM32F407VGT6 microcontroller) and a **BME280** sensor. 
 
-The collected data is formatted and transmitted to a PC terminal via a Virtual COM Port (VCP) at a frequency of 1 Hz. The communication between the microcontroller and the sensor is established using the I2C_1 interface. 
+The collected data is formatted and transmitted to a PC terminal via a Virtual COM Port (VCP) at a frequency of 1 Hz. Additionally, a custom Python script is provided for real-time graphical visualization of the incoming serial data. The communication between the microcontroller and the sensor is established using the I2C_1 interface. 
 
 **Key Characteristics:**
 * **Readout Frequency:** 1 Hz
 * **Data Output Format:** `Temperature: 21.09 C Pressure: 990.55 hPa Humidity: 44.86 %`
 * **Sensor Communication:** I2C_1
 * **PC Communication:** Virtual COM Port (e.g., COM3) monitored via PuTTY.
+* **Data Visualization:** Real-time plotting using Python (`matplotlib` and `pyserial`).
 
 ## Hardware Configuration
 
@@ -33,18 +34,26 @@ The BME280 sensor is connected to the STM32F4DISCOVERY board according to the fo
 
 ## Example Operation
 
-The data is streamed directly to a terminal emulator (PuTTY) on the PC via `COM3`. 
+### Terminal Output (PuTTY)
+The data can be streamed directly to a terminal emulator (PuTTY) on the PC via the specified COM port.
 
 The image below demonstrates a real-time test of the sensor's responsiveness. Upon placing a finger on the BME280 sensor, a clear rise in temperature can be observed (from 21.04 °C to 27.02 °C).
 
 ![PuTTY Terminal Output](Documentation/PuTTY_COM3.png)
 
+### Real-Time Visualization (Python)
+By running the included Python script, the serial data is parsed and displayed on a live updating plot. The image below demonstrates a real-time test of the sensor's responsiveness. Upon placing a finger on the BME280 sensor, a clear, rapid rise in both temperature and humidity can be observed on the plots.
+
+![Python Real-Time Plot](Documentation/bme280_plot.png)
+
 ## Software Implementation
 
-A core component of this project is a library developed to handle sensor communication and data processing:
+A core component of this project is the software developed to handle sensor communication, data processing, and visualization:
 
 * **[`bme280.c`](bme280.c) / [`bme280.h`](bme280.h):** This library is responsible for reading the raw, uncompensated data directly from the sensor's registers via I2C. It then applies the necessary compensation formulas to calculate accurate, human-readable values for temperature, pressure, and humidity.
-* **[`main.c`](main.c):** The main application utilizes data from the `bme280.c` library and writes the formatted data to the PuTTY terminal.
+* **[`main.c`](main.c):** The main application utilizes data from the `bme280.c` library and writes the formatted data to the Virtual COM Port.
+* **[`plot_data.py`](plot_data.py):** A Python script utilizing the `pyserial` and `matplotlib` libraries to connect to the COM port, read the incoming strings, parse the environmental values, and plot them in real-time.
+
 ## Hardware Used
 * STM32F4DISCOVERY (STM32F407VGT6)
 * Bosch BME280
