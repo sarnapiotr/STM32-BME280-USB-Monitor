@@ -52,7 +52,7 @@ A core component of this project is the software developed to handle sensor comm
 
 * **[`bme280.c`](bme280.c) / [`bme280.h`](bme280.h):** This library is responsible for reading the raw, uncompensated data directly from the sensor's registers via I2C. It then applies the necessary compensation formulas to calculate accurate, human-readable values for temperature, pressure, and humidity.
 * **[`main.c`](main.c):** The main application utilizes data from the `bme280.c` library and writes the formatted data to the Virtual COM Port.
-* **[`plot_data.py`](plot_data.py):** A Python script utilizing the `pyserial` and `matplotlib` libraries to connect to the COM port, read the incoming strings, parse the environmental values, and plot them in real-time.
+* **[`bme280_plot.py`](bme280_plot.py):** A Python script utilizing the `pyserial` and `matplotlib` libraries to connect to the COM port, read the incoming strings, parse the environmental values, and plot them in real-time.
 
 ## Hardware Used
 * STM32F4DISCOVERY (STM32F407VGT6)
