@@ -3,62 +3,62 @@ import matplotlib
 matplotlib.use('TkAgg')
 import matplotlib.pyplot as plt
 
+
 def main():
     port = 'COM' + input("Enter COM port number: ")
-    com_port = serial.Serial(port, 115200)
 
-    temp, pres, humid = [], [], []
+    try:
+        com_port = serial.Serial(port, baudrate=115200, timeout=2)
+    except serial.SerialException as e:
+        print("Error caught: " + str(e))
+        return
 
-    plt.ion()
-    fig, (ax1, ax2, ax3) = plt.subplots(3, 1, figsize=(8, 8))
+    temp, press, hum = [], [], []
+
+    fig, (ax1, ax2, ax3) = plt.subplots(3, 1, figsize=(10, 10))
     fig.tight_layout(pad=3.0)
-
-    line_t, = ax1.plot([], [], 'r')
-    line_p, = ax2.plot([], [], 'g')
-    line_h, = ax3.plot([], [], 'b')
-
-    ax1.set_title("BME280 Sensor Data")
-    ax3.set_xlabel("Samples")
-
-    ax1.set_ylabel("Temperature [C]")
-    ax1.grid(True)
-    ax2.set_ylabel("Pressure [hPa]")
-    ax2.grid(True)
-    ax3.set_ylabel("Humidity [%]")
-    ax3.grid(True)
 
     while True:
         line = com_port.readline().decode('utf-8', errors='ignore').strip()
 
         if line:
             print(line)
-
             parts = line.split()
 
             if len(parts) >= 8:
-                val_t = float(parts[1])
-                val_p = float(parts[4])
-                val_h = float(parts[7])
-
-                temp.append(val_t)
-                pres.append(val_p)
-                humid.append(val_h)
+                temp.append(float(parts[1]))
+                press.append(float(parts[4]))
+                hum.append(float(parts[7]))
 
                 if len(temp) > 100:
                     temp.pop(0)
-                    pres.pop(0)
-                    humid.pop(0)
+                    press.pop(0)
+                    hum.pop(0)
 
-                x_data = range(len(temp))
-                line_t.set_data(x_data, temp)
-                line_p.set_data(x_data, pres)
-                line_h.set_data(x_data, humid)
+                ax1.clear()
+                ax2.clear()
+                ax3.clear()
 
-                for ax in (ax1, ax2, ax3):
-                    ax.relim()
-                    ax.autoscale_view()
+                ax1.plot(temp, 'r')
+                ax2.plot(press, 'g')
+                ax3.plot(hum, 'b')
 
-                plt.pause(0.01)
+                ax1.set_title("BME280 Sensor Data")
+                ax1.set_xlabel("Samples")
+                ax1.set_ylabel("Temperature [C]")
+                ax1.grid(True)
+
+                ax2.set_xlabel("Samples")
+                ax2.set_ylabel("Pressure [hPa]")
+                ax2.grid(True)
+
+                ax3.set_xlabel("Samples")
+                ax3.set_ylabel("Humidity [%]")
+                ax3.grid(True)
+        else:
+            break
+
+        plt.pause(0.01)
 
 if __name__ == '__main__':
     main()
